@@ -36,6 +36,12 @@ section{
     font-size: 25px;
     color: rgb(223, 223, 223);
 }
+.gora2{
+    font-family: 'Press Start 2P';
+    font-size: 25px;
+    color: rgb(223, 223, 223);
+    text-align: center;
+}
 .zdj{
     filter: drop-shadow(5px 5px 2px rgb(94, 68, 92));
 }
@@ -62,4 +68,5 @@ nav{
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+
 }
