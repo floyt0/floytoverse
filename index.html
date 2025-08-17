@@ -9,11 +9,6 @@
           href="https://fonts.googleapis.com/css?family=Press Start 2P">
     <link rel="stylesheet" href="styl.css">
     <title>floyt</title>
-  <div id="latestVideoContainer">
-  <h2>Najnowszy film na kanale:</h2>
-  <div id="latestVideo" style="margin-top:10px; color:darkred;">Ładowanie...</div>
-</div>
-
 <script>
   async function fetchLatestVideo(apiKey, channelId) {
     const url = `https://www.googleapis.com/youtube/v3/search?key=${apiKey}&channelId=${channelId}&order=date&part=snippet&type=video&maxResults=1`;
@@ -50,6 +45,8 @@
         <p class="gora">Welcome on the site of <a href="https://www.youtube.com/@floyt00/featured" target="_blank">floyt</a>. <br><br> Here are some of my projects:</p>
         <br>
         <hr>
+        <p class="gora">Latest project:</p>
+        <div id="latestVideo" style="color:darkred;">Ładowanie...</div>
         <div>
             <iframe width="560" height="315" src="https://www.youtube.com/embed/uqqOVEcgvHg?si=whvZfU-iHe2Csapl" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
             <iframe width="560" height="315" src="https://www.youtube.com/embed/qfiu3soIw2Y?si=OVITRE8tzGUQaGpB" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
@@ -63,6 +60,7 @@
 </section>
 </body>
 </html>
+
 
 
 
