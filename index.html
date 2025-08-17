@@ -9,9 +9,36 @@
           href="https://fonts.googleapis.com/css?family=Press Start 2P">
     <link rel="stylesheet" href="styl.css">
     <title>floyt</title>
-    <script type="text/javascript">
-        
-    </script>
+  <div id="latestVideoContainer">
+  <h2>Najnowszy film na kanale:</h2>
+  <div id="latestVideo" style="margin-top:10px; color:darkred;">Ładowanie...</div>
+</div>
+
+<script>
+  async function fetchLatestVideo(apiKey, channelId) {
+    const url = `https://www.googleapis.com/youtube/v3/search?key=${apiKey}&channelId=${channelId}&order=date&part=snippet&type=video&maxResults=1`;
+    try {
+      const res = await fetch(url);
+      if (!res.ok) throw new Error('Błąd pobierania API (' + res.status + ')');
+      const data = await res.json();
+      if (!data.items || !data.items.length) throw new Error('Brak filmów na kanale.');
+      const videoId = data.items[0].id.videoId;
+      // Tworzymy iframe do osadzenia filmu
+      const iframe = `<iframe width="560" height="315" src="https://www.youtube.com/embed/${videoId}" 
+                        title="YouTube video player" frameborder="0" allowfullscreen></iframe>`;
+      document.getElementById('latestVideo').innerHTML = iframe;
+    } catch (err) {
+      document.getElementById('latestVideo').textContent = '❗ ' + (err.message || 'Błąd.');
+    }
+  }
+
+  // Tutaj wpisz swój API Key i Channel ID
+  const myApiKey = "AIzaSyAAVM-0rB-Vswo0i7cyxzOvns8jQA_Wgfk";
+  const myChannelId = "UCCE1pbw9P1Qbi9SNjk-aD8Q";
+
+  // Wywołanie funkcji przy ładowaniu strony
+  fetchLatestVideo(myApiKey, myChannelId);
+</script>
 </head>
 <body>
     <header>
@@ -36,5 +63,6 @@
 </section>
 </body>
 </html>
+
 
 
