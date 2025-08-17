@@ -3,31 +3,36 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Najnowszy film YouTube – minimal</title>
+  <title>Najnowszy film YouTube (API)</title>
 </head>
 <body>
   <h1>Najnowszy film na kanale</h1>
-  <p>Wpisz <strong>Channel ID</strong> (np. <code>UC_x5XG1OV2P6uZZ5FSM9Ttw</code>):</p>
-  <input id="channelId" placeholder="Wklej ID kanału" />
-  <button id="loadBtn">Pokaż</button>
+
+  <div>
+    <input id="apiKey" value="AIzaSyAAVM-0rB-Vswo0i7cyxzOvns8jQA_Wgfk" style="width:300px" />
+  </div>
+  <div>
+    <input id="channelId" placeholder="Channel ID" style="width:300px" />
+  </div>
+  <button id="loadBtn">Pokaż najnowszy film</button>
 
   <div id="status" style="margin-top:10px;color:darkred"></div>
   <div id="result" style="margin-top:15px"></div>
 
   <script>
-    async function fetchLatestVideo(channelId){
-      const feedUrl = `https://www.youtube.com/feeds/videos.xml?channel_id=${encodeURIComponent(channelId)}`;
+    async function fetchLatestVideo(apiKey, channelId){
+      const url = `https://www.googleapis.com/youtube/v3/search?key=${apiKey}&channelId=${channelId}&order=date&part=snippet&type=video&maxResults=1`;
       document.getElementById('status').textContent = 'Ładowanie…';
       try{
-        const res = await fetch(feedUrl);
-        if(!res.ok) throw new Error('Błąd pobierania RSS ('+res.status+')');
-        const text = await res.text();
-        const xml = new DOMParser().parseFromString(text, 'application/xml');
-        const entry = xml.querySelector('entry');
-        if(!entry) throw new Error('Nie znaleziono żadnych filmów.');
-        const videoId = entry.querySelector('yt\\:videoId')?.textContent || '';
-        const link = videoId ? `https://www.youtube.com/watch?v=${videoId}` : '';
-        document.getElementById('result').innerHTML = link ? `<a href="${link}" target="_blank">${link}</a>` : 'Brak linku.';
+        const res = await fetch(url);
+        if(!res.ok) throw new Error('Błąd pobierania API ('+res.status+')');
+        const data = await res.json();
+        if(!data.items || !data.items.length) throw new Error('Brak filmów na kanale.');
+        const video = data.items[0];
+        const videoId = video.id.videoId;
+        const title = video.snippet.title;
+        const link = `https://www.youtube.com/watch?v=${videoId}`;
+        document.getElementById('result').innerHTML = `<p><strong>${title}</strong><br><a href="${link}" target="_blank">${link}</a></p>`;
         document.getElementById('status').textContent = '';
       }catch(err){
         document.getElementById('status').textContent = '❗ ' + (err.message || 'Błąd.');
@@ -35,12 +40,13 @@
     }
 
     document.getElementById('loadBtn').addEventListener('click', () => {
-      const id = document.getElementById('channelId').value.trim();
-      if(!id){
-        document.getElementById('status').textContent = 'Podaj prawidłowy Channel ID.';
+      const apiKey = document.getElementById('apiKey').value.trim();
+      const channelId = document.getElementById('channelId').value.trim();
+      if(!apiKey || !channelId){
+        document.getElementById('status').textContent = 'Podaj API Key i Channel ID.';
         return;
       }
-      fetchLatestVideo(id);
+      fetchLatestVideo(apiKey, channelId);
     });
   </script>
 </body>
