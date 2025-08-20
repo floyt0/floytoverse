@@ -8,7 +8,7 @@ header{
     text-align: center;
     color: white;
     font-size: 50px;
-    filter: drop-shadow(5px 5px 5px black);
+    filter: drop-shadow(5px 10px 10px black);
 }
 main{
     font-size: 32px;
@@ -83,6 +83,7 @@ footer{
     text-align: center;
     justify-content: center;
 }
+
 
 
 
