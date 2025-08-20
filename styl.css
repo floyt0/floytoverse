@@ -53,6 +53,7 @@ a{
 div{
     display: flex;
     text-align: center;
+    justify-content: center;
 }
 iframe{
     margin: 40px;
@@ -83,6 +84,7 @@ footer{
     text-align: center;
     justify-content: center;
 }
+
 
 
 
