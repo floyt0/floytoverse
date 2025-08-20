@@ -78,4 +78,8 @@ footer{
     font-size: 30px;
     filter: drop-shadow(5px 5px 5px black);
 }
+.latpro{
+    display: flex;
+    text-align: center;
+}
 
